@@ -2,7 +2,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export function createSwaggerDocument(app) {
   const config = new DocumentBuilder()
-    .setTitle('Auth With Prisma')
+    .setTitle('Auth With TypeORM')
     .setDescription('Use the base API URL as http://localhost:3000')
     .setTermsOfService('http://localhost:3000/terms-of-service')
     .addServer('http://localhost:3000')
