@@ -18,4 +18,8 @@ export class AuthService {
   login(loginDto: LoginDto) {
     return this.loginProvider.login(loginDto);
   }
+
+  me(id: number) {
+    return this.usersService.findById(id);
+  }
 }

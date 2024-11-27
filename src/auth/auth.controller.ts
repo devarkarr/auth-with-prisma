@@ -1,9 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginDto } from './dtos/login.dto';
 import { Auth } from './decorators/auth/auth.decorator';
 import { AUTH_TYPE } from './enums/auth.enum';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { ActiveUser } from './decorators/auth/active-user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -19,5 +21,11 @@ export class AuthController {
   @Auth(AUTH_TYPE.None)
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Get('me')
+  @ApiBearerAuth('BearerAuth')
+  me(@ActiveUser() user) {
+    return this.authService.me(user.sub);
   }
 }

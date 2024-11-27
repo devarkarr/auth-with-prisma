@@ -30,4 +30,12 @@ export class UsersService {
     if (!user) throw new BadRequestException("Email doesn't exist");
     return user;
   }
+
+  async findById(id: number) {
+    return await this.usersRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+  }
 }
