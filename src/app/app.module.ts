@@ -14,6 +14,7 @@ import jwtConfig from 'src/auth/config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthenticationGuard } from 'src/auth/guards/authentication/authentication.guard';
 import { DataResponseInterceptor } from 'src/common/data-response/data-response.interceptor';
+import { UploadsModule } from 'src/uploads/uploads.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { DataResponseInterceptor } from 'src/common/data-response/data-response.
      */
     UsersModule,
     AuthModule,
+    UploadsModule,
     /**
      * app configuration
      */
