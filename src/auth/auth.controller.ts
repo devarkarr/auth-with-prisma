@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginDto } from './dtos/login.dto';
@@ -24,6 +24,7 @@ export class AuthController {
   }
 
   @Get('me')
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiBearerAuth('BearerAuth')
   me(@ActiveUser() user) {
     return this.authService.me(user.sub);

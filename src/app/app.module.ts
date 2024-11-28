@@ -8,11 +8,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import enviromentValidation from 'src/config/enviroment.validation';
 import { UsersModule } from 'src/users/users.module';
 import { AuthModule } from 'src/auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
 import jwtConfig from 'src/auth/config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthenticationGuard } from 'src/auth/guards/authentication/authentication.guard';
+import { DataResponseInterceptor } from 'src/common/data-response/data-response.interceptor';
 
 @Module({
   imports: [
@@ -56,9 +57,19 @@ import { AuthenticationGuard } from 'src/auth/guards/authentication/authenticati
   controllers: [AppController],
   providers: [
     AppService,
+    /**
+     * global guard
+     */
     {
       provide: APP_GUARD,
       useClass: AuthenticationGuard,
+    },
+    /**
+     * global data response transform
+     */
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: DataResponseInterceptor,
     },
     AccessTokenGuard,
   ],
