@@ -23,6 +23,10 @@ async function bootstrap() {
    * swagger configuration
    */
   createSwaggerDocument(app);
+  /**
+   * cors
+   */
+  app.enableCors();
 
   await app.listen(process.env.PORT ?? 3000);
 }

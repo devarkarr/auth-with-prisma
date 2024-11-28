@@ -38,4 +38,12 @@ export class UsersService {
       },
     });
   }
+
+  async findOneByGoogleId(id: string) {
+    return await this.usersRepository.findOne({
+      where: {
+        googleId: id,
+      },
+    });
+  }
 }

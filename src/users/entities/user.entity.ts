@@ -22,7 +22,14 @@ export class User {
 
   @Column({
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
-  password: string;
+  password?: string;
+
+  @Column({
+    type: 'varchar',
+    length: 220,
+    nullable: true,
+  })
+  googleId?: string;
 }

@@ -34,7 +34,7 @@ export class CreateUserProvider {
       ...createUserDto,
       password: hashPwd,
     });
-    await this.usersRepository.save(newUser);
+    return await this.usersRepository.save(newUser);
     return {
       message: 'User register successfully!',
     };
