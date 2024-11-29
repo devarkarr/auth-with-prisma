@@ -12,6 +12,7 @@ import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { GenerateTokenProvider } from './generate-token-provider';
+import { MailServiceService } from 'src/mail/services/mail-service.service';
 
 @Injectable()
 export class LoginProvider {
@@ -26,6 +27,8 @@ export class LoginProvider {
 
     private readonly jwtService: JwtService,
     private readonly generateTokenProvider: GenerateTokenProvider,
+
+    private readonly mailSerive:MailServiceService
   ) {}
   async login(loginDto: LoginDto) {
     const existUser = await this.usersService.findByEmail(loginDto.email);
@@ -45,6 +48,11 @@ export class LoginProvider {
 
     if (!isEqual) throw new UnauthorizedException('Password does not match');
 
+    try {
+      await this.mailSerive.sendUserWelcome(existUser)
+    } catch (error) {
+      throw new RequestTimeoutException(error);
+    }
     return await this.generateTokenProvider.generateToken(existUser);
   }
 }
